@@ -1,0 +1,48 @@
+.root {
+    -fx-background-image: url("bg-orange.jpg");
+}
+
+.button {
+    -fx-background-color:
+            linear-gradient(#ffd65b, #e68400),
+            linear-gradient(#ffef84, #f2ba44),
+            linear-gradient(#ffea6a, #efaa22),
+            linear-gradient(#ffe657 0%, #f8c202 50%, #eea10b 100%),
+            linear-gradient(from 0% 0% to 15% 50%, rgba(255,255,255,0.9), rgba(255,255,255,0));
+    -fx-background-radius: 30;
+    -fx-background-insets: 0,1,2,3,0;
+    -fx-text-fill: #654b00;
+    -fx-font-weight: bold;
+    -fx-font-size: 14px;
+    -fx-padding: 3 10 3 10;
+ }
+
+.title {
+    -fx-text-fill: #ffd65b;
+    -fx-font-weight: bold;
+    -fx-font-size: 20px;
+    -fx-highlight-text-fill: #eea10b;
+}
+
+.textfield{
+    -fx-font-smoothing-type: lcd;
+    -fx-font-size: 12px;
+    -fx-highlight-text-fill: white;
+}
+
+.table-view .column-header,
+.table-view .column-header .filler,
+.table-view .column-header-background .filler {
+    -fx-background-color:
+            linear-gradient(#ffd65b, #e68400),
+            linear-gradient(#ffef84, #f2ba44),
+            linear-gradient(#ffea6a, #efaa22),
+            linear-gradient(#ffe657 0%, #f8c202 50%, #eea10b 100%),
+            linear-gradient(from 0% 0% to 15% 50%, rgba(255,255,255,0.9), rgba(255,255,255,0));
+
+}
+
+.table-view .column-header .label {
+    -fx-text-fill: #654b00;
+    -fx-font-weight: bold;
+}
