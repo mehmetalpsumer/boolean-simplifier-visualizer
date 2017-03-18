@@ -1,7 +1,3 @@
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.util.ArrayList;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
@@ -27,15 +23,20 @@ import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.ArrayList;
 
 public class Main extends Application {
-	// Table
-	TruthTable tt;
-	TruthTable ttV2;
+	// General logic elements
+	TruthTable tt, ttV2;
 	KarnaughMap kmap;
 	BooleanExpression be;
 
-	// GUI Elements
+	/*
+	 * GUI ELEMENTS
+	 */
 	TableView<TTRow> tableV1, tableV2;
 	VBox vcenter;
 	HBox tables;
@@ -69,12 +70,18 @@ public class Main extends Application {
 		Menu design = new Menu("Design");
 		MenuItem orangeTheme = new MenuItem("Orange Theme");
 		orangeTheme.setOnAction(e -> {
+			if (vcenter.getChildren().size() == 4)
+				vcenter.getChildren().remove(3);
+			pane.getChildren().clear();
 			scene.getStylesheets().remove(scene.getStylesheets().size() - 1);
 			scene.getStylesheets().add("resources/orangetheme.css");
 			isDarkTheme = true;
 		});
 		MenuItem darkTheme = new MenuItem("Black and White Theme");
 		darkTheme.setOnAction(e -> {
+			if (vcenter.getChildren().size() == 4)
+				vcenter.getChildren().remove(3);
+			pane.getChildren().clear();
 			scene.getStylesheets().remove(scene.getStylesheets().size() - 1);
 			scene.getStylesheets().add("resources/darktheme.css");
 			isDarkTheme = false;
@@ -111,7 +118,7 @@ public class Main extends Application {
 			pane.getChildren().clear();
 		});
 		MenuItem us = new MenuItem("About Us");
-		us.setOnAction(e -> showAlert("About Us", "This application is developed by DEUCENG students: \n Mehmet Alp Sümer \n Deniz Akkuþ \n Kubilay Tek"));
+		us.setOnAction(e -> showAlert("About Us", "This application is developed by DEUCENG students: \n Mehmet Alp Sï¿½mer \n Deniz Akkuï¿½ \n Kubilay Tek"));
 		MenuItem project = new MenuItem("Help");
 		project.setOnAction(e -> showAlert("Help","To give inputs you should write your expression in the box in a form like X.Y+X'.Y or you can simply click load and select your files."));
 		Menu table_size = new Menu("Generate Table");
@@ -578,7 +585,7 @@ public class Main extends Application {
 				}
 			}
 			else{
-				showAlert("Hoaydaaa", "Kanka bi 3 gün daha verirsen bunu da ekleriz.");
+				showAlert("Hoaydaaa", "Kanka bi 3 gï¿½n daha verirsen bunu da ekleriz.");
 				//	            	fileWriter.write(kmap.getFinalform());
 			}
 			fileWriter.close();

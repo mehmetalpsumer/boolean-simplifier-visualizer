@@ -1,0 +1,55 @@
+.root {
+    -fx-background-image: url("bg-light2.jpg");
+
+}
+
+.button {
+    -fx-background-color:
+            #090a0c,
+            linear-gradient(#38424b 0%, #1f2429 20%, #191d22 100%),
+            linear-gradient(#20262b, #191d22),
+            radial-gradient(center 50% 0%, radius 100%, rgba(114,131,148,0.9), rgba(255,255,255,0));
+    -fx-background-radius: 5,4,3,5;
+    -fx-background-insets: 0,1,2,0;
+    -fx-text-fill: white;
+    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );
+    -fx-font-family: "Arial";
+    -fx-text-fill: linear-gradient(white, #d0d0d0);
+    -fx-font-size: 12px;
+    -fx-padding: 3 10 3 10;
+}
+
+.title {
+    -fx-font-family: "Constantia";
+    -fx-font-smoothing-type: lcd;
+    -fx-text-fill: #090a0c,
+    linear-gradient(#38424b 0%, #1f2429 20%, #191d22 100%),
+    linear-gradient(#20262b, #191d22),
+    radial-gradient(center 50% 0%, radius 100%, rgba(114,131,148,0.9), rgba(255,255,255,0));
+    -fx-font-weight: bold;
+    -fx-font-style: oblique;
+    -fx-font-size: 20px;
+    -fx-highlight-text-fill: white;
+}
+
+.textfield{
+    -fx-font-smoothing-type: lcd;
+    -fx-font-size: 12px;
+    -fx-highlight-text-fill: white;
+}
+
+.table-view .column-header,
+.table-view .column-header .filler,
+.table-view .column-header-background .filler {
+    -fx-background-color:
+            #090a0c,
+            linear-gradient(#38424b 0%, #1f2429 20%, #191d22 100%),
+            linear-gradient(#20262b, #191d22),
+            radial-gradient(center 50% 0%, radius 100%, rgba(114,131,148,0.9), rgba(255,255,255,0));
+
+}
+
+.table-view .column-header .label {
+    -fx-text-fill: linear-gradient(white, #d0d0d0);
+    -fx-font-weight: bold;
+}
