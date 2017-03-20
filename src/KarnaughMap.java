@@ -1,12 +1,4 @@
-import java.awt.PaintContext;
-import java.awt.Rectangle;
-import java.awt.RenderingHints;
-import java.awt.geom.AffineTransform;
-import java.awt.geom.Rectangle2D;
-import java.awt.image.ColorModel;
 import java.util.ArrayList;
-
-import javax.swing.GroupLayout.Alignment;
 
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
@@ -19,10 +11,10 @@ import javafx.stage.Screen;
 public class KarnaughMap {
 	
 	private ArrayList<String> inputs;
-	private Shell[] shells;
+	private Cell[] cells;
 	private int[][] truthtable;
 	private String finalform;
-	private ArrayList<ArrayList<Shell>> forcolor = new ArrayList<>();
+	private ArrayList<ArrayList<Cell>> forcolor = new ArrayList<>();
  	public String getFinalform() {
 		return finalform;
 	}
@@ -39,16 +31,16 @@ public class KarnaughMap {
 			}
 		}
 		create_shells(size);
-		for (int i = 0; i < shells.length; i++) {
-			for (int j = 0; j < shells.length; j++) {
+		for (int i = 0; i < cells.length; i++) {
+			for (int j = 0; j < cells.length; j++) {
 				if (i != j)
-					set_neighbours(shells[i], shells[j], size);
+					set_neighbours(cells[i], cells[j], size);
 			}
 		}
 
 		int count = 0;
-		for (int i = 0; i < shells.length; i++) {
-			if (shells[i].getTruth_value() == 1)
+		for (int i = 0; i < cells.length; i++) {
+			if (cells[i].getTruth_value() == 1)
 			{
 				count++;
 
@@ -62,7 +54,7 @@ public class KarnaughMap {
 		}
 			
 	}
-	public int count_simplified(Shell[] sh)
+	public int count_simplified(Cell[] sh)
 	{
 		int count = 0;
 		for (int i = 0; i < sh.length; i++) {
@@ -73,19 +65,19 @@ public class KarnaughMap {
 	}
 	public void create_shells(int size)
 	{
-		shells = new Shell[(int) Math.pow(2, size)];
-		for (int i = 0; i < shells.length; i++) {
-			shells[i] = new Shell(size);
+		cells = new Cell[(int) Math.pow(2, size)];
+		for (int i = 0; i < cells.length; i++) {
+			cells[i] = new Cell(size);
 			String add = "";
 			for (int j2 = 0; j2 < truthtable[i].length - 1; j2++) {
 				add = add.concat(Integer.toString(truthtable[i][j2]));
 
 			}
-			shells[i].setAdress(add);
-			shells[i].setTruth_value(truthtable[i][truthtable[i].length - 1]);
+			cells[i].setAdress(add);
+			cells[i].setTruth_value(truthtable[i][truthtable[i].length - 1]);
 		}
-//		for (int i = 0; i < shells.length; i++) {
-//			System.out.println(shells[i].getAdress() + " " + shells[i].getTruth_value());
+//		for (int i = 0; i < cells.length; i++) {
+//			System.out.println(cells[i].getAdress() + " " + cells[i].getTruth_value());
 //		}
 	}
 	public String simplify(int count, int size)
@@ -95,20 +87,20 @@ public class KarnaughMap {
 			return "1";
 		else
 		{
-			Shell[] forsimplify = new Shell[count];
-			for (int i = 0; i < shells.length; i++) {
-				if (shells[i].getTruth_value() == 1)
+			Cell[] forsimplify = new Cell[count];
+			for (int i = 0; i < cells.length; i++) {
+				if (cells[i].getTruth_value() == 1)
 				{
 					for (int j = 0; j < forsimplify.length; j++) {
 						if (forsimplify[j] == null)
 						{
-							forsimplify[j] = shells[i];
+							forsimplify[j] = cells[i];
 							break;
 						}
 					}
 				}
 			}
-			ArrayList<Shell[]> fours = new ArrayList<>();
+			ArrayList<Cell[]> fours = new ArrayList<>();
 			for (int i = 0; i < forsimplify.length; i++) {
 				for (int j = 0; j < forsimplify.length; j++) {
 					for (int j2 = 0; j2 < forsimplify.length; j2++) {
@@ -116,7 +108,7 @@ public class KarnaughMap {
 							
 							if (equal(new int[]{i, j, j2, k}))
 							{
-								Shell[] sq = new Shell[4];
+								Cell[] sq = new Cell[4];
 								sq[0] = forsimplify[i];
 								sq[1] = forsimplify[j];
 								sq[2] = forsimplify[j2];
@@ -138,7 +130,7 @@ public class KarnaughMap {
 						{
 							if (check_eight(fours.get(i), fours.get(j)))
 							{
-								ArrayList<Shell> forexp = new ArrayList<>();
+								ArrayList<Cell> forexp = new ArrayList<>();
 								for (int j2 = 0; j2 < fours.get(i).length; j2++) {
 									forexp.add(fours.get(i)[j2]);
 									forexp.add(fours.get(j)[j2]);
@@ -159,7 +151,7 @@ public class KarnaughMap {
 			for (int i = 0; i < fours.size(); i++) {
 				if (count_simplified(fours.get(i)) == 0)
 				{
-					ArrayList<Shell> a = new ArrayList<>();
+					ArrayList<Cell> a = new ArrayList<>();
 					for (int j = 0; j < fours.get(i).length; j++) {
 						a.add(fours.get(i)[j]);
 					}
@@ -175,7 +167,7 @@ public class KarnaughMap {
 			for (int i = 0; i < fours.size(); i++) {
 				if (count_simplified(fours.get(i)) == 1)
 				{
-					ArrayList<Shell> a = new ArrayList<>();
+					ArrayList<Cell> a = new ArrayList<>();
 					for (int j = 0; j < fours.get(i).length; j++) {
 						a.add(fours.get(i)[j]);
 					}
@@ -191,7 +183,7 @@ public class KarnaughMap {
 			for (int i = 0; i < fours.size(); i++) {
 				if (count_simplified(fours.get(i)) == 2)
 				{
-					ArrayList<Shell> a = new ArrayList<>();
+					ArrayList<Cell> a = new ArrayList<>();
 					for (int j = 0; j < fours.get(i).length; j++) {
 						a.add(fours.get(i)[j]);
 					}
@@ -207,7 +199,7 @@ public class KarnaughMap {
 			for (int i = 0; i < fours.size(); i++) {
 				if (count_simplified(fours.get(i)) == 3)
 				{
-					ArrayList<Shell> a = new ArrayList<>();
+					ArrayList<Cell> a = new ArrayList<>();
 					for (int j = 0; j < fours.get(i).length; j++) {
 						a.add(fours.get(i)[j]);
 					}
@@ -220,14 +212,14 @@ public class KarnaughMap {
 						return s;
 				}
 			}
-			ArrayList<Shell[]> twos = new ArrayList<>();
+			ArrayList<Cell[]> twos = new ArrayList<>();
 			for (int i = 0; i < forsimplify.length; i++) {
 				for (int j = 0; j < forsimplify.length; j++) {
 					if (i != j)
 					{
 						if (isNeighbour(forsimplify[i], forsimplify[j]))
 						{
-							twos.add(new Shell[] {forsimplify[i], forsimplify[j]});
+							twos.add(new Cell[] {forsimplify[i], forsimplify[j]});
 						}
 					}
 				}
@@ -235,7 +227,7 @@ public class KarnaughMap {
 			for (int i = 0; i < twos.size(); i++) {
 				if (count_simplified(twos.get(i)) == 0)
 				{
-					ArrayList<Shell> a = new ArrayList<>();
+					ArrayList<Cell> a = new ArrayList<>();
 					for (int j = 0; j < twos.get(i).length; j++) {
 						a.add(twos.get(i)[j]);
 					}
@@ -251,7 +243,7 @@ public class KarnaughMap {
 			for (int i = 0; i < twos.size(); i++) {
 				if (count_simplified(twos.get(i)) == 1)
 				{
-					ArrayList<Shell> a = new ArrayList<>();
+					ArrayList<Cell> a = new ArrayList<>();
 					for (int j = 0; j < twos.get(i).length; j++) {
 						a.add(twos.get(i)[j]);
 					}
@@ -275,7 +267,7 @@ public class KarnaughMap {
 		}
 
 	}
-	public String expression(ArrayList<Shell> kar)
+	public String expression(ArrayList<Cell> kar)
 	{
 		String addr = "";
 		for (int i = 0; i < kar.get(0).getAdress().length(); i++) {
@@ -333,7 +325,7 @@ public class KarnaughMap {
 //		a = a + " + ";
 //		return a;
 	}
-	public boolean check_eight(Shell[] sa1, Shell[] sa2)
+	public boolean check_eight(Cell[] sa1, Cell[] sa2)
 	{
 		for (int i = 0; i < sa1.length; i++) {
 			for (int j = 0; j < sa2.length; j++) {
@@ -341,7 +333,7 @@ public class KarnaughMap {
 					return false;
 			}
 		}
-		ArrayList<Shell> sa = new ArrayList<>();
+		ArrayList<Cell> sa = new ArrayList<>();
 		for (int i = 0; i < sa2.length; i++) {
 			sa.add(sa1[i]);
 			sa.add(sa2[i]);
@@ -389,7 +381,7 @@ public class KarnaughMap {
 		}
 		return true;
 	}
-	public boolean all_simplified(Shell[] simp)
+	public boolean all_simplified(Cell[] simp)
 	{
 		for (int i = 0; i < simp.length; i++) {
 			if (!simp[i].isSimplified())
@@ -397,7 +389,7 @@ public class KarnaughMap {
 		}
 		return true;
 	}
-	public boolean square(Shell[] s)
+	public boolean square(Cell[] s)
 	{
 
 		for (int i = 0; i < s.length; i++) {
@@ -411,7 +403,7 @@ public class KarnaughMap {
 		}
 		return true;
 	}
-	public boolean isNeighbour(Shell s1, Shell s2)
+	public boolean isNeighbour(Cell s1, Cell s2)
 	{
 
 		for (int i = 0; i < s1.getNeighbours().length; i++) {
@@ -420,34 +412,34 @@ public class KarnaughMap {
 		}
 		return false;
 	}
-	public void set_neighbours(Shell shell_1, Shell shell_2, int size)
+	public void set_neighbours(Cell cell_1, Cell cell_2, int size)
 	{
 		int count = 0;
-		for (int i = 0; i < shell_1.getAdress().length(); i++) {
-			if (!shell_1.getAdress().substring(i, i + 1).equalsIgnoreCase(shell_2.getAdress().substring(i, i + 1)))
+		for (int i = 0; i < cell_1.getAdress().length(); i++) {
+			if (!cell_1.getAdress().substring(i, i + 1).equalsIgnoreCase(cell_2.getAdress().substring(i, i + 1)))
 				count++;
 		}
 		if (count == 1)
 		{
-			for (int i = 0; i < shell_1.getNeighbours().length; i++) {
-				if (shell_1.getNeighbours()[i] == shell_2)
+			for (int i = 0; i < cell_1.getNeighbours().length; i++) {
+				if (cell_1.getNeighbours()[i] == cell_2)
 				{
 					break;
 				}
-				if (shell_1.getNeighbours()[i] == null)
+				if (cell_1.getNeighbours()[i] == null)
 				{
-					shell_1.getNeighbours()[i] = shell_2;
+					cell_1.getNeighbours()[i] = cell_2;
 					break;
 				}
 			}
-			for (int i = 0; i < shell_2.getNeighbours().length; i++) {
-				if (shell_2.getNeighbours()[i] == shell_1)
+			for (int i = 0; i < cell_2.getNeighbours().length; i++) {
+				if (cell_2.getNeighbours()[i] == cell_1)
 				{
 					break;
 				}
-				if (shell_2.getNeighbours()[i] == null)
+				if (cell_2.getNeighbours()[i] == null)
 				{
-					shell_2.getNeighbours()[i] = shell_1;
+					cell_2.getNeighbours()[i] = cell_1;
 					break;
 				}
 			}
@@ -519,15 +511,15 @@ public class KarnaughMap {
 					Text text = new Text(tt.getRows()[i].getCol()[size]);
 					if (tt.getRows()[i].getCol()[size].equals("1"))
 					{
-						for (int j = 0; j < shells.length; j++) {
+						for (int j = 0; j < cells.length; j++) {
 							boolean right_shell = true;
-							for (int j2 = 0; j2 < shells[j].getAdress().length(); j2++) {
-								if (!shells[j].getAdress().substring(j2, j2 + 1).equals(tt.getRows()[i].getCol()[j2]))
+							for (int j2 = 0; j2 < cells[j].getAdress().length(); j2++) {
+								if (!cells[j].getAdress().substring(j2, j2 + 1).equals(tt.getRows()[i].getCol()[j2]))
 									right_shell = false;
 							}
 							if (right_shell)
 							{
-								text.setFill(shells[j].getColor()==Color.BLACK ? (Main.isDarkTheme ? Color.ANTIQUEWHITE:Color.BLACK):shells[j].getColor());
+								text.setFill(cells[j].getColor()==Color.BLACK ? (Main.isDarkTheme ? Color.ANTIQUEWHITE:Color.BLACK): cells[j].getColor());
 								break;
 							}
 						}
@@ -557,15 +549,15 @@ public class KarnaughMap {
 					
 					if (tt.getRows()[i].getCol()[size].equals("1"))
 					{
-						for (int j = 0; j < shells.length; j++) {
+						for (int j = 0; j < cells.length; j++) {
 							boolean right_shell = true;
-							for (int j2 = 0; j2 < shells[j].getAdress().length(); j2++) {
-								if (!shells[j].getAdress().substring(j2, j2 + 1).equals(tt.getRows()[i].getCol()[j2]))
+							for (int j2 = 0; j2 < cells[j].getAdress().length(); j2++) {
+								if (!cells[j].getAdress().substring(j2, j2 + 1).equals(tt.getRows()[i].getCol()[j2]))
 									right_shell = false;
 							}
 							if (right_shell)
 							{
-								text.setFill(shells[j].getColor()==Color.BLACK ? (Main.isDarkTheme ? Color.ANTIQUEWHITE:Color.BLACK):shells[j].getColor());
+								text.setFill(cells[j].getColor()==Color.BLACK ? (Main.isDarkTheme ? Color.ANTIQUEWHITE:Color.BLACK): cells[j].getColor());
 								break;
 							}
 						}
@@ -591,15 +583,15 @@ public class KarnaughMap {
 					Text text = new Text(tt.getRows()[i].getCol()[size]);
 					if (tt.getRows()[i].getCol()[size].equals("1"))
 					{
-						for (int j = 0; j < shells.length; j++) {
+						for (int j = 0; j < cells.length; j++) {
 							boolean right_shell = true;
-							for (int j2 = 0; j2 < shells[j].getAdress().length(); j2++) {
-								if (!shells[j].getAdress().substring(j2, j2 + 1).equals(tt.getRows()[i].getCol()[j2]))
+							for (int j2 = 0; j2 < cells[j].getAdress().length(); j2++) {
+								if (!cells[j].getAdress().substring(j2, j2 + 1).equals(tt.getRows()[i].getCol()[j2]))
 									right_shell = false;
 							}
 							if (right_shell)
 							{
-								text.setFill(shells[j].getColor()==Color.BLACK ? (Main.isDarkTheme ? Color.ANTIQUEWHITE:Color.BLACK):shells[j].getColor());
+								text.setFill(cells[j].getColor()==Color.BLACK ? (Main.isDarkTheme ? Color.ANTIQUEWHITE:Color.BLACK): cells[j].getColor());
 								break;
 							}
 						
@@ -675,10 +667,10 @@ public class KarnaughMap {
 		}
 
 	}
-	public ArrayList<ArrayList<Shell>> getForcolor() {
+	public ArrayList<ArrayList<Cell>> getForcolor() {
 		return forcolor;
 	}
-	public void setForcolor(ArrayList<ArrayList<Shell>> forcolor) {
+	public void setForcolor(ArrayList<ArrayList<Cell>> forcolor) {
 		this.forcolor = forcolor;
 	}
 }
