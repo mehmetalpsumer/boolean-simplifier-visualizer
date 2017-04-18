@@ -1,5 +1,6 @@
-import java.util.ArrayList;
+// This class was written by kubilaytek
 
+import java.util.ArrayList;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
