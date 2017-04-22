@@ -1,6 +1,6 @@
 # Boolean Expression Simplifier and Visualizer
 
-    The application takes 2 to 4 inputed boolean expression or truth table as input and simplifies it using Quine-Mccluskey method and shows the
+   The application takes 2 to 4 inputed boolean expression or truth table as input and simplifies it using Quine-Mccluskey method and shows the
     K-Map simplification way with colors.
 
     *Input can be entered to GUI by:
